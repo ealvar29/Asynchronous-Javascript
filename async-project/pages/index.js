@@ -8,14 +8,24 @@ export default function Home() {
     Toppings: ["Chocolate", "Peanuts"],
   };
 
-  let order = (call_production) => {
-    console.log("Order placed. Please call production");
-    call_production();
+  // 1st Function
+
+  let order = (fruit_name, call_production) => {
+    setTimeout(function () {
+      console.log(`${stocks.Fruits[fruit_name]} was selected`);
+
+      // Order placed. Call production to start
+      call_production();
+    }, 2000);
   };
 
   let production = () => {
-    console.log("Production has started");
+    setTimeout(() => {
+      console.log("production has started");
+    }, 1000);
   };
+
+  order(0, production);
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
