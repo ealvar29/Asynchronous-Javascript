@@ -7,25 +7,31 @@ export default function Home() {
     Holder: ["Cone", "Cup", "Stick"],
     Toppings: ["Chocolate", "Peanuts"],
   };
+  let is_shop_open = true;
 
-  // 1st Function
-
-  let order = (fruit_name, call_production) => {
-    setTimeout(function () {
-      console.log(`${stocks.Fruits[fruit_name]} was selected`);
-
-      // Order placed. Call production to start
-      call_production();
-    }, 2000);
+  let order = (time, work) => {
+    return new Promise((resolve, reject) => {
+      if (is_shop_open) {
+        setTimeout(() => {
+          resolve(work());
+        }, time);
+      } else {
+        reject(console.log("Our shop is closed"));
+      }
+    });
   };
 
   let production = () => {
     setTimeout(() => {
       console.log("production has started");
+
+      setTimeout(() => {
+        console.log("The fruit has been chopped");
+      }, 2000);
     }, 1000);
   };
 
-  order(0, production);
+  order(2000, () => console.log(`${stocks.Fruits[0]} was selected`));
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
@@ -33,7 +39,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+      <main className="flex flex-col items-center justify-center flex-1 w-full px-20 text-center">
         <h1 className="text-6xl font-bold">
           Welcome to{" "}
           <a className="text-blue-600" href="https://nextjs.org">
